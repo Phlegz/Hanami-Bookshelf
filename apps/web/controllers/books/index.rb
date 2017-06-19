@@ -3,9 +3,11 @@ module Web::Controllers::Books
     include Web::Action
 
     expose :books
+    expose :authors
 
     def call(params)
       @books = BookRepository.new.all
     end
   end
+
 end

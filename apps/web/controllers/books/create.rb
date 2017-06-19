@@ -13,12 +13,14 @@ module Web::Controllers::Books
 
     def call(params)
       if params.valid?
-        @book = BookRepository.new.create(params[:book])
+        AuthorRepository.new.create_with_books(name: (params[:book])[:author], books: [{title: (params[:book])[:title]}])
 
         redirect_to routes.books_path
       else
         self.status = 422
       end
     end
+    
   end
+
 end
