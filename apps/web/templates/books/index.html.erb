@@ -1,5 +1,6 @@
+<%= link_to 'Create a new book', '/books/new' %> |
+<%= link_to 'See the list of authors', '/authors' %>
 <h2>All books</h2>
-
 <% if books.any? %>
   <div id="books">
     <% books.each do |book| %>
