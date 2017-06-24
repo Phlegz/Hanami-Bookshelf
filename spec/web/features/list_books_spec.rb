@@ -5,8 +5,9 @@ describe 'List books' do
   before do
     repository.clear
 
-    repository.create(title: 'PoEAA', author: 'Martin Fowler')
-    repository.create(title: 'TDD',   author: 'Kent Beck')
+    AuthorRepository.new.create_with_books(name: 'Martin Fowler', books: [{title: 'PoEAA'}])
+    AuthorRepository.new.create_with_books(name: 'Kent Beck', books: [{title: 'TDD'}])
+
   end
 
   it 'displays each book on the page' do

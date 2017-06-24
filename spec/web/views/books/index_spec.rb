@@ -18,8 +18,13 @@ describe Web::Views::Books::Index do
   end
 
   describe 'when there are books' do
-    let(:book1)     { Book.new(title: 'Refactoring', author: 'Martin Fowler') }
-    let(:book2)     { Book.new(title: 'Domain Driven Design', author: 'Eric Evans') }
+    @author = AuthorRepository.new.create_with_books(name: 'Martin Fowler', books: [{title: 'Refactoring'}])
+    @author = AuthorRepository.new.create_with_books(name: 'Eric Evans', books: [{title: 'Domain Driven Design'}])
+
+    let(:book1)     { BookRepository.new.find(1) }
+    let(:book2)     { BookRepository.new.find(2) }
+    # let(:book1)     { Book.new(title: 'Refactoring', author: 'Martin Fowler') }
+    # let(:book2)     { Book.new(title: 'Domain Driven Design', author: 'Eric Evans') }
     let(:exposures) { Hash[books: [book1, book2]] }
 
     it 'lists them all' do

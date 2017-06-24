@@ -8,8 +8,8 @@ describe Web::Controllers::Books::Index do
 
   before do
     repository.clear
-
-    @book = repository.create(title: 'TDD', author: 'Kent Beck')
+    @author = AuthorRepository.new.create_with_books(name: 'Kent Beck', books: [{title: 'TDD'}])
+    @book = BookRepository.new.all
   end
 
   it 'is successful' do
