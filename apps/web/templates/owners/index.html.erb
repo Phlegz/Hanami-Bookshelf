@@ -1,0 +1,17 @@
+<h2>All Owners</h2>
+
+<% if owners.any? %>
+  <div id="owners">
+    <% owners.each do |owner| %>
+      <div class="owner">
+      <%= owner.name %>
+      <%= OwnerRepository.new.find_with_books(owner.id).books %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="placeholder">There are no owners yet.</p>
+<% end %>
+
+
+<%= link_to 'Back', '/books' %>
