@@ -3,6 +3,7 @@ Hanami::Model.migration do
     create_table :books do
       primary_key :id
       foreign_key :author_id, :authors, on_delete: :cascade, null: false
+      foreign_key :owner_id, :owners, on_delete: :cascade, null: false
 
       column :title,  String, null: false
 
