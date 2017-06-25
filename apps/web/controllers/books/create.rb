@@ -6,14 +6,15 @@ module Web::Controllers::Books
 
     params do
       required(:book).schema do
-        required(:title).filled(:str?)
         required(:author).filled(:str?)
+        required(:owner).filled(:str?)
+        required(:title).filled(:str?)
       end
     end
 
     def call(params)
       if params.valid?
-        AuthorRepository.new.create_with_books(name: (params[:book])[:author], books: [{title: (params[:book])[:title]}])
+        AuthorRepository.new.create_with_books(name: (params[:book])[:author], owner: (params[:book])[:owner], books: [{title: (params[:book])[:title]}])
         redirect_to routes.books_path
       else
         self.status = 422
