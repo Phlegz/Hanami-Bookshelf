@@ -4,15 +4,29 @@ class AuthorRepository < Hanami::Repository
   end
 
 # create an author with a collection of books:
-# invoke the function in this way: create_with_books(name: "AuthorName", books: [{title: "Booktitle"}])
+# invoke the function in this way: create_with_books(name: "AuthorName", books: [{title: "Booktitle"}], owner: "ownerName")
 #This function is invoked when creating a new book and inserts the associated author to the db/ It also checks if the author already exists in the db and if it does, it just saves the book with the corresponding author_id
   def create_with_books(data)
-    result = authors.read("select name from authors where name='#{data[:name]}'").to_a
-    if ((result[0]) != nil)
-      result = authors.read("select id from authors where name='#{data[:name]}'").to_a
-      BookRepository.new.create(author_id: result[0].id, title: (data[:books][0])[:title])
+    authorResult = authors.read("select name from authors where name='#{data[:name]}'").to_a
+    ownerResult1 = OwnerRepository.new.owner_exists(data[:owner])
+    if (ownerResult1[0] != nil)
+      if ((authorResult[0]) != nil)
+        result = authors.read("select id from authors where name='#{data[:name]}'").to_a
+        BookRepository.new.create(author_id: result[0].id, owner_id: ownerResult1[0].id, title: (data[:books][0])[:title])
+      else
+        authorResult = AuthorRepository.new.create(name: data[:name])
+        BookRepository.new.create(author_id: authorResult.id, owner_id: ownerResult1[0].id, title: (data[:books][0])[:title])
+      end
+
     else
-    assoc(:books).create(data)
+      ownerResult = OwnerRepository.new.create(name: (data[:owner]))
+      if ((authorResult[0]) != nil)
+        result = authors.read("select id from authors where name='#{data[:name]}'").to_a
+        BookRepository.new.create(author_id: result[0].id, owner_id: ownerResult.id, title: (data[:books][0])[:title])
+      else
+        authorResult = AuthorRepository.new.create(name: data[:name])
+        BookRepository.new.create(author_id: authorResult.id, owner_id: ownerResult.id, title: (data[:books][0])[:title])
+      end
     end
   end
 
