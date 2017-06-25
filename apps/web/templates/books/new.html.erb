@@ -23,9 +23,15 @@
       text_field :author
     end
 
+    div class: 'input' do
+      label      :owner
+      text_field :owner
+    end
+
     div class: 'controls' do
       submit 'Create Book'
     end
   end
 %>
+
 <%= link_to 'Back', '/books' %>
