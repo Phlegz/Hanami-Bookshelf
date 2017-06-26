@@ -1,7 +1,7 @@
-<%= link_to 'Create a new book', '/books/new' %> |
 <%= link_to 'See the list of books', '/books' %> |
 <%= link_to 'See the list of authors', '/authors' %> |
-<%= link_to 'See the list of owners', '/owners' %>
+<%= link_to 'See the list of owners', '/owners' %> |
+<%= link_to 'Create a new book', '/books/new' %>
 <h2>All Owners</h2>
 
 <% if owners.any? %>
@@ -9,7 +9,6 @@
     <% owners.each do |owner| %>
       <div class="owner">
       <%= owner.name %>
-      <%= owner.id %>
       <%= BookRepository.new.group_by(owner.id) %>
       </div>
     <% end %>
